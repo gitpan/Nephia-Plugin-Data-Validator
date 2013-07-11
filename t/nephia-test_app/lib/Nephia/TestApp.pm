@@ -4,7 +4,7 @@ use warnings;
 use Nephia;
 use utf8;
 
-our $VERSION = 0.01;
+our $VERSION = 0.02;
 
 nephia_plugins 'Data::Validator';
 
@@ -12,7 +12,7 @@ use Mouse::Util::TypeConstraints;
 enum 'Sex' => qw( male female shemale );
 
 path '/validate' => sub {
-    return validate( 
+    return validate (
         name => { isa => 'Str' },
         age => { isa => 'Int', default => 72 },
         sex => { isa => 'Sex', default => 'shemale'}

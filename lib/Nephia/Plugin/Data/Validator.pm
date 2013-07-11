@@ -3,17 +3,23 @@ use 5.008005;
 use strict;
 use warnings;
 
-our $VERSION = "0.01";
+our $VERSION = "0.02";
+our @EXPORT = qw/ validate /;
+our $APP_CLASS;
 
 use Data::Validator;
 
-sub validate {
-    my $caller = caller();
-    no strict ('refs', 'subs');
+sub load {
+    my ($class, $app) = @_;
+    $APP_CLASS = $app;
+}
+
+sub validate (@) {
     no warnings 'redefine';
-    my $req = *{$caller.'::req'};
+    my $req = $APP_CLASS->can('req');
     my $validator = Data::Validator->new(@_);
-    return $validator->validate( %{$req->()->parameters->as_hashref_mixed} );
+    my $res = eval { $validator->validate( %{$req->()->parameters->as_hashref_mixed} ) };
+    return $@ ? { error => $@ } : $res;
 }
 
 1;
@@ -33,7 +39,7 @@ You may use validator with validate function.
   nephia_plugins('Data::Validator)';
   
   path '/some/path' => sub {
-      my $params = validate(
+      my $params = validate (
           name => { isa => 'Str', default => 'Nameless John' },
           age => { isa => 'Int' }
       );
