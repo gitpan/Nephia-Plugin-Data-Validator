@@ -27,13 +27,13 @@ no_index:
 provides:
   Nephia::Plugin::Data::Validator:
     file: lib/Nephia/Plugin/Data/Validator.pm
-    version: 0.03
+    version: 0.04
 requires:
   Data::Validator: 0
-  Nephia: 0.31
+  Nephia: 0.32
   perl: 5.008005
 resources:
   bugtracker: https://github.com/ytnobody/Nephia-Plugin-Data-Validator/issues
   homepage: https://github.com/ytnobody/Nephia-Plugin-Data-Validator
   repository: git://github.com/ytnobody/Nephia-Plugin-Data-Validator.git
-version: 0.03
+version: 0.04
